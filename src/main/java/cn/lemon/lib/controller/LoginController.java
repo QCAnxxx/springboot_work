@@ -39,13 +39,6 @@ public class LoginController {
     @Autowired
     MenuService menuService;
 
-    /**
-     * 登录页面
-     * */
-//    @GetMapping("/login")
-//    public String loginIndex() {
-//        return "/login/index.html";
-//    }
 
     /**
      * 登录验证
@@ -61,54 +54,20 @@ public class LoginController {
 
         ControllerSimplify controllerSimplify=new ControllerSimplify(studentService,teacherService,adminService,cookie,session,username,password,model);
         String returnPath="/login/index.html";
-//        int current = 2;
         if (type == 0) {
-//            Student check = studentService.check(username, password);
-//            if (check == null) {
-//                model.addAttribute("error","账号密码错误");
-//                return "/login/index.html";
-//            }
-//            cookie = new Cookie("cookie_username", String.valueOf(check.getId()));
-//            session.setAttribute("userInfo",check.getId());
-//            model.addAttribute("name",check.getUsername());
-//            current = 0;
             returnPath=controllerSimplify.loginControllerCheckLoginToCheck("student");
         } else if (type == 1){
-//            Teacher check = teacherService.check(username, password);
-//            if (check == null) {
-//                model.addAttribute("error","账号密码错误");
-//                return "/login/index.html";
-//            }
-//            cookie = new Cookie("cookie_username", String.valueOf(check.getId()));
-//            session.setAttribute("userInfo",check.getId());
-//            model.addAttribute("name",check.getUsername());
-//            current = 1;
             returnPath=controllerSimplify.loginControllerCheckLoginToCheck("teacher");
         } else if (type == 2){
-//            Admin check = adminService.check(username, password);
-//            if (check == null) {
-//                model.addAttribute("error","账号密码错误");
-//                return "/login/index.html";
-//            }
-//            cookie = new Cookie("cookie_username", String.valueOf(check.getId()));
-//            session.setAttribute("userInfo",check.getId());
-//            model.addAttribute("name",check.getName());
-//            current = 2;
             returnPath=controllerSimplify.loginControllerCheckLoginToCheck("admin");
         }
-        // 保存cookie，实现自动登录
-        // 设置cookie的持久化时间，30天
-        cookie.setMaxAge(30 * 24 * 60 * 60);
         cookie.setMaxAge(60 * 60);
-        // 设置为当前项目下都携带这个cookie
+
         cookie.setPath(request.getContextPath());
-//        log.info("Cookie Path:"+request.getContextPath());
+
         // 向客户端发送cookie
         response.addCookie(cookie);
-//        switch (current) {
-//            case 0:return "studentIndex.html";
-//            case 1:return "teacherIndex.html";
-//        }
+
         return returnPath;
     }
 

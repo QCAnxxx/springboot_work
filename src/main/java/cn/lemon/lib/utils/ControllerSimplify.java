@@ -57,7 +57,6 @@ public class ControllerSimplify {
                 }
                 cookie = new Cookie("cookie_username", String.valueOf(student.getId()));
                 session.setAttribute("userInfo",student.getId());
-                model.addAttribute("name",student.getUsername());
                 return "studentIndex.html";
 
             case "teacher":
@@ -69,7 +68,6 @@ public class ControllerSimplify {
                 }
                 cookie = new Cookie("cookie_username", String.valueOf(teacher.getId()));
                 session.setAttribute("userInfo",teacher.getId());
-                model.addAttribute("name",teacher.getUsername());
                 return "teacherIndex.html";
 
 
@@ -82,7 +80,6 @@ public class ControllerSimplify {
                 }
                 cookie = new Cookie("cookie_username", String.valueOf(admin.getId()));
                 session.setAttribute("userInfo",admin.getId());
-                model.addAttribute("name",admin.getName());
                 return "index.html";
 
             default:
