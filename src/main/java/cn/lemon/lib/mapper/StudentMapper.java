@@ -19,4 +19,6 @@ public interface StudentMapper {
     List<Student> getStudentListOfGrade(@Param("page")int page, @Param("limit")int limit,@Param("gradeId")int gradeId);
 
     Student findByUsernameAndPassword(@Param("username")String username,@Param("password")String password);
+
+//    Student findById(@Param("id")long id);
 }

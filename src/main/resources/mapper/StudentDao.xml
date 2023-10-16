@@ -40,6 +40,10 @@
     from student
     where username = #{username} and password = #{password}
   </select>
+  
+<!--  <select id="findById" resultMap="BaseResultMap">-->
+
+<!--  </select>-->
 
   <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
     <!--delete from student-->

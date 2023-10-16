@@ -8,6 +8,7 @@ import cn.lemon.lib.service.MenuService;
 import cn.lemon.lib.service.StudentService;
 import cn.lemon.lib.service.TeacherService;
 import cn.lemon.lib.utils.ControllerSimplify;
+import cn.lemon.lib.utils.WithControllerSimplify;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,11 +41,12 @@ public class LoginController {
     MenuService menuService;
 
 
-    /**
-     * 登录验证
-     * */
+
     @PostMapping("/login")
     public String checkLogin(String username, String password, int type, HttpServletRequest request, HttpServletResponse response, Model model) {
+        /**
+         * 实现自动登录
+         */
 
         log.info("username {}, password {}, type {}", username, password, type);
 
@@ -53,22 +55,28 @@ public class LoginController {
         model.addAttribute("error",null);
 
         ControllerSimplify controllerSimplify=new ControllerSimplify(studentService,teacherService,adminService,cookie,session,username,password,model);
-        String returnPath="/login/index.html";
+        WithControllerSimplify data=new WithControllerSimplify("/login/index.html",cookie);
         if (type == 0) {
-            returnPath=controllerSimplify.loginControllerCheckLoginToCheck("student");
+            data=controllerSimplify.loginControllerCheckLoginToCheck("student");
         } else if (type == 1){
-            returnPath=controllerSimplify.loginControllerCheckLoginToCheck("teacher");
+            data=controllerSimplify.loginControllerCheckLoginToCheck("teacher");
         } else if (type == 2){
-            returnPath=controllerSimplify.loginControllerCheckLoginToCheck("admin");
+            data=controllerSimplify.loginControllerCheckLoginToCheck("admin");
         }
-        cookie.setMaxAge(60 * 60);
 
-        cookie.setPath(request.getContextPath());
+        Cookie newCookie=data.getCookie();
 
-        // 向客户端发送cookie
-        response.addCookie(cookie);
+        if (newCookie != null){
+            log.info("传递的cookie为: {} {}",newCookie.getName(),newCookie.getValue());
+            newCookie.setMaxAge(60 * 60);
+            newCookie.setPath(request.getContextPath());
 
-        return returnPath;
+            // 向客户端发送cookie
+            response.addCookie(newCookie);
+        }
+
+
+        return data.getUrl();
     }
 
     /**
@@ -76,16 +84,20 @@ public class LoginController {
      * */
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        log.info("== 执行了注销操作 ==");
         // 删除session里面的用户信息
         session.removeAttribute("userInfo");
-        // 保存cookie，实现自动登录
-        Cookie cookie_username = new Cookie("cookie_username", "");
-        // 设置cookie的持久化时间，0
-        cookie_username.setMaxAge(0);
-        // 设置为当前项目下都携带这个cookie
-        cookie_username.setPath(request.getContextPath());
-        // 向客户端发送cookie
-        response.addCookie(cookie_username);
+
+        // 删除cookie
+        Cookie[] deleteCookie=request.getCookies();
+        for (Cookie cookie:deleteCookie){
+            if (cookie.getName().equals("student") || cookie.getName().equals("teacher") || cookie.getName().equals("admin")){
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+        }
+
         return "/login/index";
     }
 }

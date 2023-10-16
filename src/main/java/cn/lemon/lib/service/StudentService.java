@@ -6,6 +6,7 @@ import cn.lemon.lib.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.Style;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,5 +60,11 @@ public class StudentService {
         Student student = studentMapper.findByUsernameAndPassword(username, password);
         return student;
     }
+
+    //根据id找学生
+//    public Student check(long id){
+//        Student byID = studentMapper.findById(id);
+//        return byID;
+//    }
 
 }

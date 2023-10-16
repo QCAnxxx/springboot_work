@@ -45,7 +45,14 @@ public class ControllerSimplify {
         this.password=password;
         this.model=model;
     }
-    public String loginControllerCheckLoginToCheck(String server)
+
+    /**
+     * 该方法目的为 LoginController checkLogin 进行简化。
+     * WithControllerSimplify的产生是为了模拟实现多参数传递
+     * @param server
+     * @return  WithControllerSimplify
+     */
+    public WithControllerSimplify loginControllerCheckLoginToCheck(String server)
     {
         switch (server) {
             case "student":
@@ -53,22 +60,22 @@ public class ControllerSimplify {
                 if (student == null)
                 {
                     model.addAttribute("error","账号密码错误");
-                    return "/login/index.html";
+                    return new WithControllerSimplify("/login/index.html",null);
                 }
-                cookie = new Cookie("cookie_username", String.valueOf(student.getId()));
+                cookie = new Cookie("student", String.valueOf(student.getId()));
                 session.setAttribute("userInfo",student.getId());
-                return "studentIndex.html";
+                return new WithControllerSimplify("studentIndex.html",cookie);
 
             case "teacher":
                 Teacher teacher=teacherService.check(username,password);
                 if (teacher == null)
                 {
                     model.addAttribute("error","账号密码错误");
-                    return "/login/index.html";
+                    return new WithControllerSimplify("/login/index.html",null);
                 }
-                cookie = new Cookie("cookie_username", String.valueOf(teacher.getId()));
+                cookie = new Cookie("teacher", String.valueOf(teacher.getId()));
                 session.setAttribute("userInfo",teacher.getId());
-                return "teacherIndex.html";
+                return new WithControllerSimplify("teacherIndex.html",cookie);
 
 
             case "admin":
@@ -76,15 +83,16 @@ public class ControllerSimplify {
                 if (admin == null)
                 {
                     model.addAttribute("error","账号密码错误");
-                    return "/login/index.html";
+                    return new WithControllerSimplify("/login/index.html",null);
                 }
-                cookie = new Cookie("cookie_username", String.valueOf(admin.getId()));
+                cookie = new Cookie("admin", String.valueOf(admin.getId()));
+
                 session.setAttribute("userInfo",admin.getId());
-                return "index.html";
+                return new WithControllerSimplify("index.html",cookie);
 
             default:
                 log.error("== loginControllerCheckLoginToCheck WRONG ==");
-                return "/login/index.html";
+                return new WithControllerSimplify("/login/index.html",null);
         }
 
     }
