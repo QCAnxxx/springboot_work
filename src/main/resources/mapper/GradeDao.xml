@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lemon.lib.mapper.GradeMapper">
+    <resultMap id="BaseResultMap" type="cn.lemon.lib.entity.Grade">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, `name`, grader_id, teacher_id, start_week, end_week, `day`, `part`
+  </sql>
+    <select id="getCurrentGradeOfTeacher" resultMap="BaseResultMap">
+    SELECT grade.id, grade.name
+    FROM grade, teacher, subject
+    WHERE teacher.id = `subject`.teacher_id
+        AND grade.id = `subject`.grade_id
+        AND grade.id NOT IN (
+            SELECT s.id
+            FROM subject s
+            WHERE #{startWeek} BETWEEN s.start_week AND s.end_week
+                AND s.day = #{day}
+                AND s.part = #{part}
+                AND s.teacher_id = #{teacherId}
+        )
+    AND teacher.id = #{teacherId}
+    GROUP BY grade.id
+
+  </select>
+
+    <select id="countOfMyGrade" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM grade
+        where grade.id IN (
+
+        SELECT `subject`.grade_id FROM subject
+        WHERE `subject`.teacher_id = #{teacherId}
+        )
+    </select>
+    <select id="getGradeListOfMine" resultMap="BaseResultMap">
+        SELECT grade.id, grade.name FROM grade
+        where grade.id IN (
+
+        SELECT `subject`.grade_id FROM subject
+        WHERE `subject`.teacher_id = #{teacherId}
+        )
+        limit #{page},#{limit}
+
+    </select>
+
+</mapper>
