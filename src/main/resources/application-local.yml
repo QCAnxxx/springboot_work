@@ -4,6 +4,10 @@ spring:
     url: jdbc:mysql://localhost:3306/test2?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123123
+
+  thymeleaf:
+    cache: false
+
 server:
   port: 8080
 #配置白名单
@@ -11,3 +15,4 @@ whiteList: /login/**,/logout/**
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+

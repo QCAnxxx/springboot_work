@@ -2,6 +2,7 @@ package cn.lemon.lib.service;
 
 import cn.lemon.lib.dao.MenuDao;
 import cn.lemon.lib.entity.Menu;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,13 +13,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class MenuService {
 
     @Autowired
     MenuDao menuDao;
 
     public List<Menu> getMenuList() {
-
+        log.info("MenuService 进行数据查找");
         return menuDao.findAll();
     }
 

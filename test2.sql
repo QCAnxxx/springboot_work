@@ -213,3 +213,15 @@ INSERT INTO `teacher` VALUES (5, 'c语言老师', '123456', 123, '女', 23, 0);
 INSERT INTO `teacher` VALUES (6, '李二', '123456', 123, '男', 22, 0);sho
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+DROP TABLE IF EXISTS `announcement`;
+CREATE TABLE `announcement` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `content` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `release_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+INSERT INTO `announcement` VALUES (1,'今日xxx实验室因设备安装无法进行预约','2023-10-20');
+INSERT INTO `announcement` VALUES (2, '2023-10-27 有关部门将进行实验室安全检查，固当日全天不开放','2023-10-22');
+INSERT INTO `announcement` VALUES ('2023-10-39 xxx实验室不开放');

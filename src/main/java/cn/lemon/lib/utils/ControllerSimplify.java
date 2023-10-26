@@ -1,14 +1,17 @@
 package cn.lemon.lib.utils;
 
 import cn.lemon.lib.entity.Admin;
+import cn.lemon.lib.entity.Menu;
 import cn.lemon.lib.entity.Student;
 import cn.lemon.lib.entity.Teacher;
 import cn.lemon.lib.service.AdminService;
+import cn.lemon.lib.service.MenuService;
 import cn.lemon.lib.service.StudentService;
 import cn.lemon.lib.service.TeacherService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.Cookie;
@@ -33,6 +36,9 @@ public class ControllerSimplify {
     String password;
 
     Model model;
+
+//    @Autowired
+//    MenuService menuService;
 
 
     public ControllerSimplify(StudentService studentService, TeacherService teacherService, AdminService adminService,Cookie cookie,HttpSession session, String username, String password, Model model){
@@ -88,6 +94,14 @@ public class ControllerSimplify {
                 cookie = new Cookie("admin", String.valueOf(admin.getId()));
 
                 session.setAttribute("userInfo",admin.getId());
+//                return new WithControllerSimplify("index.html",cookie);
+
+//                indexDraw();
+//                log.info("ControllerSimplify 渲染主页面");
+//                List<Menu> menuList = menuService.getMenuList();
+//                List<Menu> menuTree = TreeUtils.list2tree(menuList);
+//                model.addAttribute("menuTree",menuTree);
+
                 return new WithControllerSimplify("index.html",cookie);
 
             default:
@@ -96,4 +110,12 @@ public class ControllerSimplify {
         }
 
     }
+
+
+//    public void indexDraw(){
+//        log.info("ControllerSimplify 渲染主页面");
+//        List<Menu> menuList = menuService.getMenuList();
+//        List<Menu> menuTree = TreeUtils.list2tree(menuList);
+//        model.addAttribute("menuTree",menuTree);
+//    }
 }

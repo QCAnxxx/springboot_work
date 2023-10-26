@@ -22,11 +22,12 @@ public class IndexController {
 
     @GetMapping("/index")
     public String index(HttpSession session, Model model) {
-        String userInfo = (String) session.getAttribute("userInfo");
-        log.info("userInfo {}", userInfo);
-        // 根据用户类型查找相应的菜单
+//        String userInfo = (String) session.getAttribute("userInfo");
+//        log.info("userInfo {}", userInfo);
+//        // 根据用户类型查找相应的菜单
 
         //添加菜单权限
+        log.info("IndexController 进入该方法");
         List<Menu> menuList = menuService.getMenuList();
         List<Menu> menuTree = TreeUtils.list2tree(menuList);
         model.addAttribute("menuTree",menuTree);
