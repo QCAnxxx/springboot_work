@@ -101,14 +101,18 @@ CREATE TABLE `menu`  (
 -- Records of menu
 -- ----------------------------
 INSERT INTO `menu` VALUES (1, '主页', 'index.html', 0, 3);
-INSERT INTO `menu` VALUES (2, '用户管理', 'javascript:;', 0, 1);
-INSERT INTO `menu` VALUES (4, '实验室管理', '111', 0, 1);
-INSERT INTO `menu` VALUES (5, '教务管理', 'javascript:;', 0, 3);
+INSERT INTO `menu` VALUES (2, '用户管理', '', 0, 1);
+INSERT INTO `menu` VALUES (4, '实验室管理', '', 0, 1);
+INSERT INTO `menu` VALUES (5, '教务管理', '', 0, 3);
 INSERT INTO `menu` VALUES (6, '学生管理', './user/student/index.html', 2, 0);
 INSERT INTO `menu` VALUES (7, '教师管理', './user/teacher/index.html', 2, 1);
 INSERT INTO `menu` VALUES (8, '实验室列表', './lib/index.html', 4, 0);
 INSERT INTO `menu` VALUES (9, '班级管理', './education/grade/index.html', 5, 0);
 INSERT INTO `menu` VALUES (10, '课程管理', './education/subject/index.html', 5, 1);
+INSERT INTO `menu` VALUES (11, '通知管理', '', 0, 1);
+INSERT INTO `menu` VALUES (12, '通知管理', './announcement/adminIndex.html', 11, 1);
+
+
 
 -- ----------------------------
 -- Table structure for reservation
