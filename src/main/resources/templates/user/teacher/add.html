@@ -11,7 +11,7 @@
     <form class="layui-form" action="">
         <div class="layui-form-item" th:if="${teacher.getUsername() == null}">
             <label class="layui-form-label">
-                <a href="http://localhost:8080/user/teacher/index.html" class="layui-btn layui-btn-normal">返回</a>
+<!--                <a href="http://localhost:8080/user/teacher/index.html" class="layui-btn layui-btn-normal">返回</a>-->
             </label>
         </div>
         <div class="layui-form-item" th:if="${teacher.getId() != 0}">
@@ -49,7 +49,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" type="button" lay-submit lay-filter="formSubmit">立即提交</button>
+                <button class="layui-btn" type="button" lay-submit lay-filter="formSubmit" onclick="iClose()">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary" th:if="${teacher.getId() == 0}">重置</button>
             </div>
         </div>
@@ -60,4 +60,11 @@
 <script src="/layui/layui.js"></script>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/user/teacher/add.js"></script>
+
+<script>
+    function iClose(){
+    var index = parent.layer.getFrameIndex(window.name);
+    parent.layer.close(index);
+    }
+</script>
 </html>

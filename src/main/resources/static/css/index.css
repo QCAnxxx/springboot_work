@@ -1,0 +1,32 @@
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #2f363c;
+    color: white;
+    padding: 10px 5px;
+    border: none;
+    top:0px;
+  }
+  .openbtn:hover {
+    background-color:#444;
+  }
+  .closebtn {
+    position: absolute;
+    cursor: pointer;
+    color: white;
+    top: 0;
+    right: 0;
+    font-size: 25px;
+    margin-left: 50px;
+  }
+  .closebtn:hover {
+    background-color:#444;
+  }
+  #sideBar{  text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;}
+
+  #place2{right: 70px;}
+  #mainBody{transition: margin-left .5s;padding: 0px;}

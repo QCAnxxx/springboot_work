@@ -1,7 +1,11 @@
 package cn.lemon.lib.controller;
 
 import cn.lemon.lib.entity.Menu;
+import cn.lemon.lib.entity.Student;
+import cn.lemon.lib.entity.Teacher;
 import cn.lemon.lib.service.MenuService;
+import cn.lemon.lib.service.StudentService;
+import cn.lemon.lib.service.TeacherService;
 import cn.lemon.lib.utils.TreeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,11 @@ import java.util.List;
 @Controller
 @Slf4j
 public class HomeController {
+
+    @Autowired
+    StudentService studentService;
+    @Autowired
+    TeacherService teacherService;
 
     @Autowired
     MenuService menuService;
@@ -38,10 +47,14 @@ public class HomeController {
                 switch (cookie.getName()) {
                     case "student":
                         log.info("== HomeController：student id is {} ==", id);
+                        Student student= studentService.getStudentById(Long.parseLong(cookie.getValue()));
+                        model.addAttribute("name",student.getUsername());
                         return "studentIndex.html";
 
                     case "teacher":
                         log.info("== HomeController：teacher id is {} ==", id);
+                        Teacher teacher= teacherService.getTeacherById(Long.parseLong(cookie.getValue()));
+                        model.addAttribute("name",teacher.getUsername());
                         return "teacherIndex.html";
 
                     case "admin":
@@ -52,7 +65,7 @@ public class HomeController {
                         List<Menu> menuList = menuService.getMenuList();
                         List<Menu> menuTree = TreeUtils.list2tree(menuList);
                         model.addAttribute("menuTree",menuTree);
-
+                        model.addAttribute("name","admin");
                         return "index.html";
 
                     default:

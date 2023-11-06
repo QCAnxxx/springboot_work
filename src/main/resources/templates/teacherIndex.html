@@ -2,18 +2,73 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
+<!--    <meta charset="utf-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">-->
+<!--    <title>在线实验室预约系统</title>-->
+<!--    <link rel="stylesheet" href="layui/css/layui.css">-->
+
+
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <title>在线实验室预约系统</title>
-    <link rel="stylesheet" href="layui/css/layui.css">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="//unpkg.com/layui@2.8.18-rc.3/dist/css/layui.css" rel="stylesheet" media="all">
+    <style>
+        .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #2f363c;
+        color: white;
+        padding: 10px 5px;
+        border: none;
+        top:0px;
+      }
+      .openbtn:hover {
+        background-color:#444;
+      }
+      .closebtn {
+        position: absolute;
+        cursor: pointer;
+        color: white;
+        top: 0;
+        right: 0;
+        font-size: 25px;
+        margin-left: 50px;
+      }
+      .closebtn:hover {
+        background-color:#444;
+      }
+      #sideBar{  text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;}
+
+      #place2{right: 70px;}
+      #mainBody{transition: margin-left .5s;padding: 0px;}
+      </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">实验室后台管理</div>
+<!--        <div class="layui-logo">实验室后台管理</div>-->
+        <div class="layui-logo layui-hide-xs layui-bg-black" >
+            <i class="openbtn" onclick="openNav()" type="button" title="展开侧边菜单">☰</i>
+            <i style="color:#1bb98f">实验室预约系统</i>
+            <i href="javascript:void(0)" class="closebtn layui-icon layui-icon-prev" onclick="closeNav()" style="color:rgb(234, 234, 234)" title="收起侧边菜单"></i>
+        </div>
+
+
         <!-- 头部区域（可配合layui已有的水平导航） -->
+<!--        <ul class="layui-nav layui-layout-left">-->
+<!--            <li class="layui-nav-item"><a href="">控制台</a></li>-->
+<!--        </ul>-->
+
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><li class="layui-nav-item layui-hide-xs"><a id="nothing" type="button" onclick="jump()" title="清空当前页面" style="cursor: pointer;">控制台</a></li>
         </ul>
 
         <ul class="layui-nav layui-layout-right">
@@ -29,13 +84,14 @@
                 <!--</dl>-->
             </li>
             <li class="layui-nav-item"><a href="/logout">退出</a></li>
+            <li class="layui-nav-item"><a class="layui-icon layui-icon-logout" href="/logout" title="退回到登录页面"></a></li>
         </ul>
     </div>
 
-    <div class="layui-side layui-bg-black">
+    <div id="sideBar" class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test" lay-accordion>
 
                 <li class="layui-nav-item" th:each="menu:${menuTree}">
                     <a class="" href="javascript:;" th:text="${menu.getName()}"></a>
@@ -74,21 +130,60 @@
     </div>
 
 </div>
-<script src="layui/layui.js"></script>
+<!--<script src="layui/layui.js"></script>-->
+<!--<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>-->
+<!--<script>-->
+<!--    $(document).ready(function(){-->
+<!--      $("dd>a").click(function (e) {-->
+<!--            e.preventDefault();-->
+<!--            $("#iframeMain").attr("src",$(this).attr("href"));-->
+<!--        });-->
+<!--    });-->
+<!--    //JavaScript代码区域-->
+<!--    layui.use('element', function(){-->
+<!--      var element = layui.element;-->
+
+<!--    });-->
+
+<!--</script>-->
+
+<script src="//unpkg.com/layui@2.8.18-rc.3/dist/layui.js"></script>
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
-      $("dd>a").click(function (e) {
-            e.preventDefault();
-            $("#iframeMain").attr("src",$(this).attr("href"));
-        });
-    });
-    //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use(['element', 'layer', 'util'], function(){
       var element = layui.element;
+      var layer = layui.layer;
+      var util = layui.util;
+      var $ = layui.$;
 
+      //头部事件
+      util.event('lay-header-event', {
+        menuLeft: function(othis){ // 左侧菜单事件
+          layer.msg('展开左侧菜单的操作', {icon: 0});
+        },
+
+      });
     });
+    function openNav() {
+      document.getElementById("sideBar").style.width = "200px";
+    };
 
-</script>
+    function closeNav() {
+      document.getElementById("sideBar").style.width = "0";
+    };
+    $(document).ready(function(){
+          $("dd>a").click(function (e) {
+                e.preventDefault();
+                $("#iframeMain").attr("src",$(this).attr("href"));
+            });
+        });
+        layui.use('element', function(){
+          var element = layui.element;
+
+        });
+    function jump(){
+      document.getElementById("iframeMain").src="";
+    };
+    </script>
 </body>
 </html>

@@ -70,6 +70,7 @@ public class ControllerSimplify {
                 }
                 cookie = new Cookie("student", String.valueOf(student.getId()));
                 session.setAttribute("userInfo",student.getId());
+                model.addAttribute("name",username);
                 return new WithControllerSimplify("studentIndex.html",cookie);
 
             case "teacher":
@@ -80,7 +81,8 @@ public class ControllerSimplify {
                     return new WithControllerSimplify("/login/index.html",null);
                 }
                 cookie = new Cookie("teacher", String.valueOf(teacher.getId()));
-                session.setAttribute("userInfo",teacher.getId());
+                session.setAttribute("userInfo",username);
+                model.addAttribute("name",teacher.getUsername());
                 return new WithControllerSimplify("teacherIndex.html",cookie);
 
 
@@ -94,6 +96,7 @@ public class ControllerSimplify {
                 cookie = new Cookie("admin", String.valueOf(admin.getId()));
 
                 session.setAttribute("userInfo",admin.getId());
+                model.addAttribute("name","admin");
 //                return new WithControllerSimplify("index.html",cookie);
 
 //                indexDraw();
