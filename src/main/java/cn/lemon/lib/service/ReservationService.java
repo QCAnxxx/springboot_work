@@ -6,13 +6,17 @@ import cn.lemon.lib.entity.Reservation;
 import cn.lemon.lib.entity.Student;
 import cn.lemon.lib.entity.Teacher;
 import cn.lemon.lib.mapper.ReservationMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ReservationService {
 
     @Autowired
@@ -29,6 +33,8 @@ public class ReservationService {
 
     @Autowired
     ReservationMapper reservationMapper;
+
+
 
     public void save(Reservation  reservation) {
         reservationDao.save(reservation);
@@ -60,7 +66,20 @@ public class ReservationService {
         for (Reservation reservation : reservationList) {
             if (reservation.getType() == 0) {
 
-                // 如果学生中找不到，则再管理员中查找
+//                log.info((String) session.getAttribute("type"));
+//                if (session.getAttribute("type").equals("0"))
+//                {
+//                    log.info("ReservationService type == 0");
+//                    Admin admin=adminService.getAdminById(reservation.getUserId());
+//                    reservation.setReservationName(admin.getName());
+//                }else
+//                {
+//                    log.info("ReservationService type ！= 0");
+//                    Student student = studentService.getStudentById(reservation.getUserId());
+//                    reservation.setReservationName(student.getUsername());
+//                }
+
+//                 如果学生中找不到，则再管理员中查找
                 try {
                     Student student = studentService.getStudentById(reservation.getUserId());
                     reservation.setReservationName(student.getUsername());
@@ -71,8 +90,25 @@ public class ReservationService {
 
 
             } else {
-                Teacher teacher = teacherService.getTeacherById(reservation.getUserId());
-                reservation.setReservationName(teacher.getUsername());
+//                if (session.getAttribute("type").equals("0"))
+//                {
+//                    Admin admin=adminService.getAdminById(reservation.getUserId());
+//                    reservation.setReservationName(admin.getName());
+//                }else
+//                {
+//                    Teacher teacher = teacherService.getTeacherById(reservation.getUserId());
+//                    reservation.setReservationName(teacher.getUsername());
+//                }
+
+                try {
+                    Teacher teacher = teacherService.getTeacherById(reservation.getUserId());
+                    reservation.setReservationName(teacher.getUsername());
+                }catch (Exception e){
+                    Admin admin=adminService.getAdminById(reservation.getUserId());
+                    reservation.setReservationName(admin.getName());
+                }
+//                Teacher teacher = teacherService.getTeacherById(reservation.getUserId());
+//                reservation.setReservationName(teacher.getUsername());
             }
         }
         // 获取预约类型
@@ -154,8 +190,16 @@ public class ReservationService {
 
 
             } else {
-                Teacher teacher = teacherService.getTeacherById(reservation.getUserId());
-                reservation.setReservationName(teacher.getUsername());
+
+                try {
+                    Teacher teacher = teacherService.getTeacherById(reservation.getUserId());
+                    reservation.setReservationName(teacher.getUsername());
+                }catch (Exception e){
+                    Admin admin=adminService.getAdminById(reservation.getUserId());
+                    reservation.setReservationName(admin.getName());
+                }
+//                Teacher teacher = teacherService.getTeacherById(reservation.getUserId());
+//                reservation.setReservationName(teacher.getUsername());
             }
         }
         // 获取预约类型

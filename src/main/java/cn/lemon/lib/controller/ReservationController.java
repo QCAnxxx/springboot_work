@@ -8,11 +8,13 @@ import cn.lemon.lib.service.LibService;
 import cn.lemon.lib.service.ReservationService;
 import cn.lemon.lib.utils.ConstantUtils;
 import cn.lemon.lib.vo.ResultVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/reservation")
+@Slf4j
 public class ReservationController {
 
     @Autowired
@@ -100,9 +103,11 @@ public class ReservationController {
     @GetMapping
     @ResponseBody
     public ResultVO getReservationList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                 @RequestParam(value = "limit", defaultValue = "10") Integer limit) {
+                                       @RequestParam(value = "limit", defaultValue = "10") Integer limit,HttpSession session) {
         page -= 1;
         long total = reservationService.count();
+        Long type = (Long)session.getAttribute("type");
+
         List<Reservation> reservationList = reservationService.getReservationList(page,limit);
         HashMap<String,Object> data = new HashMap<>();
         data.put("total",total);

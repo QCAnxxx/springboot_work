@@ -35,7 +35,7 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES (1, 'admin', 'admin', 1234567891, 0, '1', 0);
+INSERT INTO `admin` VALUES (100, 'admin', 'admin', 1234567891, 0, '1', 0);
 
 -- ----------------------------
 -- Table structure for grade
@@ -158,7 +158,7 @@ CREATE TABLE `student`  (
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES (1, 'admin', 'gg', 0 ,'男', 30, 0);
+INSERT INTO `student` VALUES (1, '小安', '123456', 0 ,'男', 30, 0);
 INSERT INTO `student` VALUES (2, '小红', '123456', 2, '女', 17, 0);
 INSERT INTO `student` VALUES (3, '小黄', '123456', 4, '女', 19, 0);
 INSERT INTO `student` VALUES (4, '刘洋', '123456', 6, '男', 16, 0);
