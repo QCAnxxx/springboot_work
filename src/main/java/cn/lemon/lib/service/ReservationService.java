@@ -1,6 +1,7 @@
 package cn.lemon.lib.service;
 
 import cn.lemon.lib.dao.ReservationDao;
+import cn.lemon.lib.entity.Admin;
 import cn.lemon.lib.entity.Reservation;
 import cn.lemon.lib.entity.Student;
 import cn.lemon.lib.entity.Teacher;
@@ -22,6 +23,9 @@ public class ReservationService {
 
     @Autowired
     TeacherService teacherService;
+
+    @Autowired
+    AdminService adminService;
 
     @Autowired
     ReservationMapper reservationMapper;
@@ -55,8 +59,17 @@ public class ReservationService {
         List<Reservation> reservationList = reservationMapper.getReservationList(page, limit);
         for (Reservation reservation : reservationList) {
             if (reservation.getType() == 0) {
-                Student student = studentService.getStudentById(reservation.getUserId());
-                reservation.setReservationName(student.getUsername());
+
+                // 如果学生中找不到，则再管理员中查找
+                try {
+                    Student student = studentService.getStudentById(reservation.getUserId());
+                    reservation.setReservationName(student.getUsername());
+                }catch (Exception e){
+                    Admin admin=adminService.getAdminById(reservation.getUserId());
+                    reservation.setReservationName(admin.getName());
+                }
+
+
             } else {
                 Teacher teacher = teacherService.getTeacherById(reservation.getUserId());
                 reservation.setReservationName(teacher.getUsername());
@@ -130,8 +143,16 @@ public class ReservationService {
         List<Reservation> reservationList = reservationMapper.getNoneAuditReservationList(page, limit);
         for (Reservation reservation : reservationList) {
             if (reservation.getType() == 0) {
-                Student student = studentService.getStudentById(reservation.getUserId());
-                reservation.setReservationName(student.getUsername());
+
+                try {
+                    Student student = studentService.getStudentById(reservation.getUserId());
+                    reservation.setReservationName(student.getUsername());
+                }catch (Exception e){
+                    Admin admin=adminService.getAdminById(reservation.getUserId());
+                    reservation.setReservationName(admin.getName());
+                }
+
+
             } else {
                 Teacher teacher = teacherService.getTeacherById(reservation.getUserId());
                 reservation.setReservationName(teacher.getUsername());

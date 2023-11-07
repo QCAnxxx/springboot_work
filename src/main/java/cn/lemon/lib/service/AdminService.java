@@ -16,4 +16,8 @@ public class AdminService {
         Admin admin = adminDao.findByName(username);
         return admin;
     }
+
+    public Admin getAdminById(Long id){
+        return adminDao.findById(id).get();
+    }
 }

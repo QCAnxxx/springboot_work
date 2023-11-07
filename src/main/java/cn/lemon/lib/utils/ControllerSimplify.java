@@ -81,8 +81,8 @@ public class ControllerSimplify {
                     return new WithControllerSimplify("/login/index.html",null);
                 }
                 cookie = new Cookie("teacher", String.valueOf(teacher.getId()));
-                session.setAttribute("userInfo",username);
-                model.addAttribute("name",teacher.getUsername());
+                session.setAttribute("userInfo",teacher.getId());
+                model.addAttribute("name",username);
                 return new WithControllerSimplify("teacherIndex.html",cookie);
 
 

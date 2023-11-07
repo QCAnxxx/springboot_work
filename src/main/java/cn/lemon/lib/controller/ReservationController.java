@@ -58,9 +58,11 @@ public class ReservationController {
         return "/reservation/individual/index.html";
     }
 
+    /**
+     * 跳转预约列表
+     */
     @GetMapping("/index.html")
     public String toReservationIndexHtml() {
-
         return "/reservation/index.html";
     }
 
@@ -86,6 +88,7 @@ public class ReservationController {
     @ResponseBody
     public ResultVO addReservation(Reservation reservation, HttpSession session) {
         long userId = (long)session.getAttribute("userInfo");
+
         reservation.setUserId(userId);
         reservationService.save(reservation);
         return ResultVO.SUCCESS();

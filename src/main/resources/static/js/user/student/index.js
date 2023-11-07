@@ -4,7 +4,11 @@ var DELETE_DATA_URL = "http://localhost:8080/user/student/delete";
 
 var TABLE_LIST_NAME = 'studentList';
 
-layui.use(['table','form'], function () {
+layui.use(['table','form','layer'], function () {
+
+
+
+
     var table = layui.table;
     // 菜单表格渲染
     table.render({
@@ -92,11 +96,13 @@ layui.use(['table','form'], function () {
     var form = layui.form;
     var layer = layui.layer;
     //监听提交
-    form.on('submit(formSubmit)', function(data) {
+    form.on('submit(formSubmitSearch)', function(data) {
+        layer.msg(JSON.stringify(data.field));
         table.reload('tableList', {
             url: GET_TABLE_URL,
             where: {'page': 1, 'limit': 10, 'gradeId': data.field.gradeId}
         });
         return false;
     });
+
 });

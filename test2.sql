@@ -158,12 +158,19 @@ CREATE TABLE `student`  (
 -- ----------------------------
 -- Records of student
 -- ----------------------------
+INSERT INTO `student` VALUES (1, 'admin', 'gg', 0 ,'男', 30, 0);
 INSERT INTO `student` VALUES (2, '小红', '123456', 2, '女', 17, 0);
 INSERT INTO `student` VALUES (3, '小黄', '123456', 4, '女', 19, 0);
 INSERT INTO `student` VALUES (4, '刘洋', '123456', 6, '男', 16, 0);
 INSERT INTO `student` VALUES (5, '小兰', '123456', 7, '女', 18, 0);
 INSERT INTO `student` VALUES (6, '小紫', '123456', 5, '女', 19, 0);
 INSERT INTO `student` VALUES (7, '李五', '123456', 7, '男', 22, 0);
+
+ALTER TABLE student
+ADD CONSTRAINT adStu
+FOREIGN KEY (CustomerID)
+REFERENCES Customers(CustomerID);
+
 
 -- ----------------------------
 -- Table structure for subject
@@ -214,7 +221,7 @@ INSERT INTO `teacher` VALUES (2, '王五', '123456', 112, '男', 22, 0);
 INSERT INTO `teacher` VALUES (3, '李四', '123456', 113, '男', 23, 0);
 INSERT INTO `teacher` VALUES (4, 'java老师', '123456', 112, '男', 23, 0);
 INSERT INTO `teacher` VALUES (5, 'c语言老师', '123456', 123, '女', 23, 0);
-INSERT INTO `teacher` VALUES (6, '李二', '123456', 123, '男', 22, 0);sho
+INSERT INTO `teacher` VALUES (6, '李二', '123456', 123, '男', 22, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
 
