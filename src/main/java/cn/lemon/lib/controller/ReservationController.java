@@ -106,7 +106,7 @@ public class ReservationController {
                                        @RequestParam(value = "limit", defaultValue = "10") Integer limit,HttpSession session) {
         page -= 1;
         long total = reservationService.count();
-        Long type = (Long)session.getAttribute("type");
+//        Long type = (Long)session.getAttribute("type");
 
         List<Reservation> reservationList = reservationService.getReservationList(page,limit);
         HashMap<String,Object> data = new HashMap<>();

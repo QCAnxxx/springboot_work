@@ -24,8 +24,8 @@
     </style>
 </head>
 
+<!--<body onload="showErrorPopup()">-->
 <body>
-
 <!-- Carousel -->
 <div class="layui-row">
     <div class="layui-col-sm12 layui-col-md12">
@@ -87,8 +87,11 @@
             </div>
             <div class="layui-col-sm12 layui-col-md12" th:if="error != null">
                 <div class="layui-form-item">
-                   <p th:text="${error}"></p>
+                   <p id="error" th:text="${error}"></p>
                 </div>
+<!--                <div id="error" th:if="$(error)">${error}</div>-->
+
+
             </div>
             <div class="layui-col-sm12 layui-col-md12">
                 <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="demo1" type="submit">立即登录</button>
@@ -96,6 +99,8 @@
         </form>
     </div>
 </div>
+
+<!--<div onload="showErrorPopup()"></div>-->
 <!-- LoginForm End -->
 
 
@@ -134,10 +139,10 @@
 
     //监听提交
     form.on('submit(demo1)', function(data){
-<!--        $.post("login", function(data) {-->
-<!--            window.location.href = 'http://localhost:8080/index.html';-->
-<!--        });-->
-<!--        return false;-->
+//<!--        $.post("login", function(data) {-->
+//<!--            window.location.href = 'http://localhost:8080/index.html';-->
+//<!--        });-->
+//<!--        return false;-->
     });
 
 
@@ -180,7 +185,64 @@
 
 });
 
+//    window.onload=showErrorPopup();
+//    function showErrorPopup() {
+//        // 检查是否存在错误信息
+//        var errorMessage = document.getElementById("error").innerHTML;
+//        if (errorMessage !== "") {
+//            // 显示错误弹窗
+//            alert(errorMessage);
+//        }
+//    }
 
+</script>
+
+<!--<script>-->
+<!--    window.onload = function() {-->
+<!--        // 先加载页面，不呈现空白状态-->
+<!--        setTimeout(function() {-->
+<!--            // 检查是否存在错误信息-->
+<!--            var errorMessage = document.getElementById("error").innerHTML;-->
+<!--            if (errorMessage !== "") {-->
+<!--                // 显示错误弹窗-->
+
+
+<!--                document.body.addEventListener('click', function(event) {-->
+<!--                    alert.close();-->
+<!--                });-->
+
+<!--                alert(errorMessage);-->
+<!--            }-->
+<!--        }, 500); // 设置延迟时间，比如1秒后执行检查和弹窗操作-->
+<!--    };-->
+
+<script>
+    window.onload = function() {
+        // 先加载页面，不呈现空白状态
+        setTimeout(function() {
+            // 检查是否存在错误信息
+            var errorMessage = document.getElementById("error").innerHTML;
+            if (errorMessage !== "") {
+                // 显示错误弹窗
+//                var isAlertOpen = true; // 用于标识弹窗是否处于打开状态
+//                window.onclick = function(event) {
+//                    if (isAlertOpen && event.button === 0) { // 如果弹窗处于打开状态且点击事件是由左键触发的
+//                        window.alert('点击了页面其他部分，弹窗已关闭'); // 关闭弹窗并显示一条消息
+//                        isAlertOpen = false; // 标记弹窗为已关闭状态
+//                    }
+//                };
+                window.alert(errorMessage); // 显示错误弹窗
+                isAlertOpen = true; // 标记弹窗为已打开状态
+            }
+        }, 500); // 设置延迟时间，比如1秒后执行检查和弹窗操作
+    };
+</script>
+
+    // 关闭错误弹窗的函数
+    function closePopup() {
+        window.close(errorPopup); // 关闭新窗口（即错误弹窗）
+    }
+</script>
 </script>
 </body>
 
